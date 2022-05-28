@@ -2,10 +2,13 @@ import React from "react";
 import AssetImage from "../../assets/room.png";
 import "./index.scss";
 const Asset = () => {
+  const handleclick = (e) => {
+    e.preventDefault();
+  };
   return (
     <div className="Asset">
       <h3 className="heading">Upload Image</h3>
-      <form>
+      <form onSubmit={handleclick}>
         <div className="Select">
           <select className="AssetSelect">
             <option>
@@ -35,10 +38,18 @@ const Asset = () => {
         </div>
         <div className="Textarea">
           <label>Add Remark</label>
-          <textarea type="text" className="textarea" id="remark" name="remark"></textarea>
+          <textarea
+            type="text"
+            className="textarea"
+            id="remark"
+            name="remark"
+          ></textarea>
         </div>
         <button type="submit" className="Submit">
-          Submit
+          Send
+        </button>
+        <button type="submit" className="Submit">
+          Send with Notification
         </button>
       </form>
     </div>

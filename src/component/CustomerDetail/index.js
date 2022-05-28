@@ -3,7 +3,9 @@ import "./index.scss";
 import Customer_image from "../../assets/detail-pic.png";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useNavigate } from "react-router-dom";
 const CustomerDetail = () => {
+  const Navigate = useNavigate();
   return (
     <div className="CustomerDetail">
       <div className="CustomerDetail_top">
@@ -92,10 +94,14 @@ const CustomerDetail = () => {
         </div>
         <div className="ImageUpload">
           <h3>UPLOAD IMAGES OF THE PRODUCTS INSTALLED</h3>
-          <label for="forInput" className="docs">
+          <button
+            className="docs"
+            onClick={() => {
+              Navigate("/orderlist/add-remarks");
+            }}
+          >
             Upload Image
-            <input type="file" id="forInput" style={{display: "none"}}/>
-          </label>
+          </button>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import Asset from "../AssetUpload";
 import CustomerDetail from "../CustomerDetail";
 import ListWrapper from "../Listwrapper";
 import Sidebar from "../SideBar";
+import { Outlet, Route, Routes } from "react-router-dom";
 import "./index.scss";
 const Home = () => {
   return (
@@ -13,7 +14,7 @@ const Home = () => {
             <Sidebar />
           </div>
           <div className="Home_right">
-       <Asset/>
+            <Outlet />
           </div>
         </div>
       </div>

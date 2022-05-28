@@ -19,13 +19,10 @@ const Sidebar = () => {
         <img src={Logo} alt={"IMG"} className="LogoImage" />
         <ul className="sidebarlist">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/home">Home</NavLink>
           </li>
           <li>
             <NavLink to="/orderlist">Order List</NavLink>
-          </li>
-          <li>
-            <NavLink to="/issue">Issue</NavLink>
           </li>
 
           <li>
@@ -45,9 +42,6 @@ const Sidebar = () => {
           </li>
           <li>
             <NavLink to="/orderlist">Order List</NavLink>
-          </li>
-          <li>
-            <NavLink to="/issue">Issue</NavLink>
           </li>
 
           <li>

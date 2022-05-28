@@ -4,8 +4,10 @@ import Key from "../../assets/key.png";
 import Key_Icon from "../../assets/key-icon.png";
 import Password from "../../assets/password.png";
 import "./index.scss";
+import { useNavigate } from "react-router-dom";
 
 const UpdatePassword = () => {
+  const Navigate = useNavigate();
   return (
     <div className="updatePasswod Forget">
       <div className="updatePasswod_password Forget_wrapper">
@@ -39,7 +41,9 @@ const UpdatePassword = () => {
              <img src={Password} alt="Logo" className="icon password" />
           </div>
 
-          <button className="Next">Next</button>
+          <button className="Next" onClick={()=>{
+            Navigate("/passwordupdatesuccessfull")
+          }}>Next</button>
         </form>
       </div>
     </div>

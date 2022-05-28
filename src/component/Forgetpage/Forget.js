@@ -1,8 +1,10 @@
 import React from "react";
 import Lock from "../../assets/lock.png";
 import EmailIcon from "@mui/icons-material/Email";
+import { useNavigate } from "react-router-dom";
 import "./Forget.scss";
 export const Forget = () => {
+  const Navigate = useNavigate();
   return (
     <>
       <div className="Forget">
@@ -29,7 +31,14 @@ export const Forget = () => {
               ></input>
             </div>
 
-            <button className="Next">Next</button>
+            <button
+              className="Next"
+              onClick={() => {
+                Navigate("/updatepassword");
+              }}
+            >
+              Next
+            </button>
           </form>
         </div>
       </div>
