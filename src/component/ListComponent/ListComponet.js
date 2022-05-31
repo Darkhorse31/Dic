@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.scss";
 import CustomerImage from "../../assets/img-1.png";
 import { useNavigate } from "react-router-dom";
-const CustomerCard = () => {
+const CustomerCard = (props) => {
+  const { Data } = props;
+  const { items } = Data;
   const Navigate = useNavigate();
   return (
     <main
       className="MainList"
       onClick={() => {
-        Navigate("order-detail");
+        Navigate(`order-detail/${Data.order_id}`);
       }}
     >
       <div className="ListComp_wrapper">
@@ -19,9 +21,9 @@ const CustomerCard = () => {
           className="CustomerImage"
         />
         <div className="right">
-          <h3 className="nameofCustomer">Customer name</h3>
-          <h4 className="Pro_name">Project Name Elementum Venenatis</h4>
-          <h5 className="Date">dd/mm/yyyy</h5>
+          <h3 className="nameofCustomer">{Data.customer_name}</h3>
+          <h4 className="Pro_name">{Data.project_name}</h4>
+          <h5 className="Date">{Data.order_date}</h5>
         </div>
       </div>
     </main>

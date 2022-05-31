@@ -72,9 +72,29 @@
             max-width: 96%;
             display: flex;
             gap: 2rem;
-            flex-wrap: wrap;
+            // flex-wrap: wrap;
             margin-bottom: 3rem;
             margin-inherit: auto;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+
+            &::-webkit-scrollbar {
+                height: 10px;
+            }
+
+            /* Track */
+            &::-webkit-scrollbar-track {
+                background: #ffffff;
+            }
+            /* Handle */
+           &::-webkit-scrollbar-thumb{
+               background-color: #86b7fe;
+           }
+
+            /* Handle on hover */
+            &::-webkit-scrollbar-thumb:hover {
+                background: rgb(90, 160, 224);
+            }
 
             img {
                 padding: 1rem;
@@ -128,6 +148,7 @@
             .textarea {
                 width: 35%;
                 height: 180px;
+                font-size: 15px;
 
 
 
@@ -142,14 +163,15 @@
         }
 
         .Submit {
-            width: 400px;
+            width: 300px;
             font-size: 1.5rem;
             font-weight: 700;
             padding: 1.5rem 0rem;
             margin-bottom: 1rem;
             border-radius: 50rem;
+            margin-inline: 10px;
             background: #212529;
-            border:none;
+            border: none;
             color: #fff;
 
             @media (max-width: 768px) {

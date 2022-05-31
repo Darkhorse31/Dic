@@ -18,8 +18,8 @@ function App() {
         <Route path="/passwordupdatesuccessfull" element={<Success />}></Route>
         <Route path="/updatepassword" element={<UpdatePassword />} />
         <Route path="/orderlist" element={<Home />}>
-          <Route path="order-detail" element={<CustomerDetail />} />
-          <Route path="add-remarks" element={<Asset />}></Route>
+          <Route path="order-detail/:id" element={<CustomerDetail />} />
+          <Route path="add-remarks/:id" element={<Asset />}></Route>
           <Route index element={<ListWrapper />}></Route>
         </Route>
         <Route path="/forget" element={<Forget />}></Route>

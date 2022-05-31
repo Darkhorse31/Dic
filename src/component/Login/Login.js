@@ -9,20 +9,33 @@ import KeyIcon from "@mui/icons-material/Key";
 import LandingPage from "../LandingPage/LandingPage";
 import { useDispatch, useSelector } from "react-redux";
 import { customerinfo } from "../../redux/slice/CustomerSlice";
+import swal from "sweetalert";
 const Lcomponent = () => {
   const dispatch = useDispatch();
   const Navigate = useNavigate();
   const [login, setLogin] = useState({ email: "", password: "" });
-  const [passwordvisble, setpasswordvisble] = useState();
-  const handleSubmit = async (e) => {
-    try {
-      const Data = await axios.post("http://89.40.2.219/api/v1/login", login);
-      const CustomerInfo = Data.data;
-      dispatch(customerinfo(CustomerInfo));
-    } catch (error) {
-      console.log("Error");
-    }
-    e.preventDefault();
+
+  const handleClick = async (event) => {
+    event.preventDefault();
+    await axios
+      .post("http://89.40.2.219/api/v1/login", login)
+      .then((res) => {
+        const { data } = res;
+        dispatch(customerinfo(data));
+
+        if (data.user_id) {
+          Navigate("/home");
+        }
+      })
+      .catch((err) => {
+        if (err) {
+          swal({
+            icon: "error",
+            title: "Customer is not exist",
+            text: "Please check Information",
+          });
+        }
+      });
   };
 
   return (
@@ -33,7 +46,7 @@ const Lcomponent = () => {
       </div>
       <div className="form">
         <h1 className="sgn_in">Sign in</h1>
-        <form method="POST" onClick={handleSubmit}>
+        <form method="POST" onSubmit={handleClick}>
           <ul>
             <li>
               <span>
@@ -69,13 +82,7 @@ const Lcomponent = () => {
               </span>
             </li>
           </ul>
-          <button
-            type="submit"
-            className="btn-sb"
-            onClick={() => {
-              Navigate(`/home`);
-            }}
-          >
+          <button type="submit" className="btn-sb">
             Sign In
           </button>
         </form>

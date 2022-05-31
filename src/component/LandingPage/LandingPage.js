@@ -5,7 +5,6 @@ import PImage from "../../assets/profile.png";
 import { useSelector } from "react-redux";
 const LandingPage = () => {
   const customer = useSelector((state) => state.customerinfo.value);
-  console.log(customer);
   return (
     <div className="LandingPage">
       <div className="Landingpage_wrapper">
