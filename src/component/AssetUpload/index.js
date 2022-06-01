@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import AssetImage from "../../assets/room.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "./index.scss";
 import { B1Floor, B2Floor } from "../Floor";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { allassets } from "../../redux/slice/AssetSice";
 var FormData = require("form-data");
+
 const Asset = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const userid = useSelector((state) => state.customerinfo.value);
-  // console.log(id);
-  // // send data throw js
-  // console.log(userid.user_id);
-
+  const assetData = useSelector((state) => state.assetSlice.value);
   const [file, setfile] = useState([null]);
   const [status, setstatus] = useState("completed");
-  const [notify, setnotify] = useState("yes");
+  const [notify, setnotify] = useState("no");
   const [unitId, setunitId] = useState("");
   const [remarks, setremarks] = useState("");
   const [building, setbuilding] = useState("");
@@ -28,7 +28,7 @@ const Asset = () => {
         )
         .then((res) => {
           const { data } = res;
-          setunitId(data[0].unit_id);
+          dispatch(allassets(data));
         })
         .catch((err) => {
           console.log(err);
@@ -36,11 +36,11 @@ const Asset = () => {
     };
     AllData();
   }, []);
-
+  // transfer Data
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData();
-    // console.log(status,notify,unitId,remarks,userid.user_id)
+    console.log(status,notify,unitId,remarks,userid.user_id)
     data.append("unit_id", unitId);
     data.append("user_id", userid.user_id);
     data.append("status", status);
@@ -50,7 +50,6 @@ const Asset = () => {
     [...file].forEach((e) => {
       data.append("image[]", e);
     });
-    console.log(data);
     await axios
       .post("http://89.40.2.219/api/v1/send_remarks", data)
       .then((res) => {
@@ -60,9 +59,31 @@ const Asset = () => {
         console.log(err);
       });
   };
+  // Transfer Data
+  // Redux Data
+  const unique = [...new Set(assetData.map((item) => item.building))];
+  const uniqueFloor = [
+    ...new Set(
+      assetData.map((Floor) => {
+        return building === Floor.building ? Floor.floor : "";
+      })
+    ),
+  ];
+  const uniqueunitId = [
+    ...new Set(
+      assetData.map((unitId) => {
+        return building === unitId.building && Floor === unitId.floor
+          ? unitId.unit_id
+          : "";
+      })
+    ),
+  ];
+  uniqueunitId.forEach((unitId) => {
+    console.log(unitId);
+  });
   return (
     <div className="Asset">
-      <h3 className="heading">Upload Image</h3>
+      <h3 className="heading">Upload Image</h3>   
       <form onSubmit={handleSubmit}>
         <div className="Select">
           <select
@@ -75,12 +96,9 @@ const Asset = () => {
             <option value="">
               <h3>Select Building</h3>
             </option>
-            <option value="B1">
-              <h3>B1</h3>
-            </option>
-            <option value="B2">
-              <h3>B2</h3>
-            </option>
+            {unique.map((ele) => {
+              return <option value={ele}>{ele}</option>;
+            })}
           </select>
           <select
             className="AssetSelect"
@@ -90,35 +108,36 @@ const Asset = () => {
             <option>
               <h3>Select Floor</h3>
             </option>
-            {building === "B1"
-              ? B1Floor.map((ele) => {
-                  return (
-                    <option>
-                      <h3>Floor {ele}</h3>
-                    </option>
-                  );
-                })
-              : building === "B2"
-              ? B2Floor.map((ele) => {
-                  return (
-                    <option value={`Floor ${ele}`}>
-                      <h3>Floor {ele}</h3>
-                    </option>
-                  );
-                })
-              : null}
+            {uniqueFloor.map((floor) => {
+              return floor !== "" ? <option value={floor}>{floor}</option> : "";
+            })}
+          </select>
+          <select
+            className="AssetSelect"
+            style={{ textTransform: "uppercase" }}
+            onChange={(e) => setunitId(e.target.value)}
+          >
+            <option>
+              <h3>Select UnitId</h3>
+            </option>
+            {uniqueunitId.map((unitId) => {
+              return unitId!==""?<option value={unitId}>Unit Id {unitId}</option>:"";
+            })}
           </select>
         </div>
         <div className="buttongroup">
-          <div className="div1">3rd Floor</div>
-          <div className="div2">Room No.102</div>
+          <div className="div1">Building<span style={{color:"royalblue",fontWeight:"bold",marginLeft:"3px"}}>{building}</span></div>
+          <div className="div2">Floor <span style={{color:"#a09df5",fontWeight:"bold",marginLeft:"3px"}}>{Floor}</span></div>
+          <div className="div1">Unit Id<span style={{color:"royalblue",fontWeight:"bold",marginLeft:"3px"}}>{unitId}</span></div>
         </div>
-        <div className="Assets_image" >
-         <img src={AssetImage} alt="Asset Image"></img>
-         <img src={AssetImage} alt="Asset Image"></img>
-         <img src={AssetImage} alt="Asset Image"></img>
-         <img src={AssetImage} alt="Asset Image"></img>
+        {/* image upload starting  */}
+        <div className="Assets_image">
+          <img src={AssetImage} alt="Asset Image"></img>
+          <img src={AssetImage} alt="Asset Image"></img>
+          <img src={AssetImage} alt="Asset Image"></img>
+          <img src={AssetImage} alt="Asset Image"></img>
         </div>
+        {/* Image upload Tab */}
         <div className="input">
           <label for="upload">Upload</label>
           <input
@@ -145,7 +164,7 @@ const Asset = () => {
         <button type="submit" className="Submit">
           Send
         </button>
-        <button type="submit" className="Submit" disabled={true}>
+        <button type="submit" className="Submit" onClick={e=>setnotify("yes")}>
           Send with Notification
         </button>
       </form>
