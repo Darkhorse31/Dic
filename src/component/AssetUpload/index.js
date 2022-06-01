@@ -21,6 +21,7 @@ const Asset = () => {
   const [remarks, setremarks] = useState("");
   const [building, setbuilding] = useState("");
   const [Floor, setFloor] = useState("");
+  const [customerImage, setCustomerImage] = useState([]);
   useEffect(() => {
     const AllData = async () => {
       await axios
@@ -39,11 +40,10 @@ const Asset = () => {
     AllData();
   }, []);
 
-
   // transfer Data
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(unitId)
+    console.log(unitId);
     const data = new FormData();
     data.append("unit_id", unitId);
     data.append("user_id", userid.user_id);
@@ -63,14 +63,20 @@ const Asset = () => {
         console.log(err);
       });
   };
-  useEffect(()=>{
-    assetData.forEach(Data=>{
-      if(Data.unit_number===unitId)
-      {
-        setunitId(Data.unit_id)
+  useEffect(() => {
+    assetData.forEach((Data) => {
+      if (Data.unit_number === unitId) {
+        setunitId(Data.unit_id);
       }
-    })
-  },[unitId])
+    });
+  }, [unitId]);
+  useEffect(() => {
+    assetData.forEach((Data) => {
+      if (Data.unit_id === unitId) {
+        setCustomerImage(Data.customer_images);
+      }
+    });
+  }, [unitId]);
   // Transfer Data
   // Redux Data
   const unique = [...new Set(assetData.map((item) => item.building))];
@@ -90,7 +96,7 @@ const Asset = () => {
       })
     ),
   ];
-  
+
   // uniqueunitId.forEach((unitId) => {
   //   console.log(unitId);
   // });
@@ -182,7 +188,9 @@ const Asset = () => {
         </div>
         {/* image upload starting  */}
         <div className="Assets_image">
-          <img src={AssetImage} alt="Asset Image"></img>
+          {customerImage.map((img) => {
+            return <img src={img} alt="Asset Image" />;
+          })}
         </div>
         {/* Image upload Tab */}
         <div className="input">
