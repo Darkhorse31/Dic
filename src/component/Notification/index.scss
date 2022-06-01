@@ -9,12 +9,10 @@
         display: flex;
         flex-wrap: wrap;
         gap: 2rem;
-        overflow-y: scroll;
+
         align-items: center;
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
+
 
     }
 }
