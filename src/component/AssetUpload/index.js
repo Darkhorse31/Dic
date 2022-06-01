@@ -13,6 +13,7 @@ const Asset = () => {
   const { id } = useParams();
   const userid = useSelector((state) => state.customerinfo.value);
   const assetData = useSelector((state) => state.assetSlice.value);
+  const [showImage,setshowImage]=useState([])
   const [file, setfile] = useState([null]);
   const [status, setstatus] = useState("completed");
   const [notify, setnotify] = useState("no");
@@ -36,11 +37,13 @@ const Asset = () => {
     };
     AllData();
   }, []);
+  const [FileList]=file;
+ 
+  
   // transfer Data
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData();
-    console.log(status,notify,unitId,remarks,userid.user_id)
     data.append("unit_id", unitId);
     data.append("user_id", userid.user_id);
     data.append("status", status);
@@ -78,9 +81,10 @@ const Asset = () => {
       })
     ),
   ];
-  uniqueunitId.forEach((unitId) => {
-    console.log(unitId);
-  });
+  
+  // uniqueunitId.forEach((unitId) => {
+  //   console.log(unitId);
+  // });
   return (
     <div className="Asset">
       <h3 className="heading">Upload Image</h3>   
