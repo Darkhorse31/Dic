@@ -192,3 +192,28 @@
         margin-left: 0;
     }
 }
+.AssetSelect {
+    width: 20%;
+    height: 3.7rem;
+    font-size: 1.5rem;
+    letter-spacing: .1rem;
+    padding-inline: 1rem;
+    background-color: white;
+    color: #212529;
+    border: 1px solid gray;
+    border-radius: 5px;
+
+    &:focus {
+
+        transition: .2s ease-in;
+        color: #212529;
+        background-color: #fff;
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 .4rem rgb(13 110 253 / 25%);
+    }
+
+    @media (max-width:768px) {
+        width: 95%;
+
+    }
+}

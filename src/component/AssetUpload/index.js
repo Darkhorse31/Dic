@@ -13,9 +13,9 @@ const Asset = () => {
   const { id } = useParams();
   const userid = useSelector((state) => state.customerinfo.value);
   const assetData = useSelector((state) => state.assetSlice.value);
-  const [showImage,setshowImage]=useState([])
+  const [showImage, setshowImage] = useState([]);
   const [file, setfile] = useState([null]);
-  const [status, setstatus] = useState("completed");
+  const [status, setstatus] = useState("");
   const [notify, setnotify] = useState("no");
   const [unitId, setunitId] = useState("");
   const [remarks, setremarks] = useState("");
@@ -29,6 +29,7 @@ const Asset = () => {
         )
         .then((res) => {
           const { data } = res;
+          console.log(data);
           dispatch(allassets(data));
         })
         .catch((err) => {
@@ -37,12 +38,12 @@ const Asset = () => {
     };
     AllData();
   }, []);
-  const [FileList]=file;
- 
-  
+
+
   // transfer Data
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log(unitId)
     const data = new FormData();
     data.append("unit_id", unitId);
     data.append("user_id", userid.user_id);
@@ -62,6 +63,14 @@ const Asset = () => {
         console.log(err);
       });
   };
+  useEffect(()=>{
+    assetData.forEach(Data=>{
+      if(Data.unit_number===unitId)
+      {
+        setunitId(Data.unit_id)
+      }
+    })
+  },[unitId])
   // Transfer Data
   // Redux Data
   const unique = [...new Set(assetData.map((item) => item.building))];
@@ -76,7 +85,7 @@ const Asset = () => {
     ...new Set(
       assetData.map((unitId) => {
         return building === unitId.building && Floor === unitId.floor
-          ? unitId.unit_id
+          ? unitId.unit_number
           : "";
       })
     ),
@@ -87,7 +96,7 @@ const Asset = () => {
   // });
   return (
     <div className="Asset">
-      <h3 className="heading">Upload Image</h3>   
+      <h3 className="heading">Upload Image</h3>
       <form onSubmit={handleSubmit}>
         <div className="Select">
           <select
@@ -122,23 +131,57 @@ const Asset = () => {
             onChange={(e) => setunitId(e.target.value)}
           >
             <option>
-              <h3>Select UnitId</h3>
+              <h3>Select Unit Number</h3>
             </option>
             {uniqueunitId.map((unitId) => {
-              return unitId!==""?<option value={unitId}>Unit Id {unitId}</option>:"";
+              return unitId !== "" ? (
+                <option value={unitId}>Unit Number {unitId}</option>
+              ) : (
+                ""
+              );
             })}
           </select>
         </div>
         <div className="buttongroup">
-          <div className="div1">Building<span style={{color:"royalblue",fontWeight:"bold",marginLeft:"3px"}}>{building}</span></div>
-          <div className="div2">Floor <span style={{color:"#a09df5",fontWeight:"bold",marginLeft:"3px"}}>{Floor}</span></div>
-          <div className="div1">Unit Id<span style={{color:"royalblue",fontWeight:"bold",marginLeft:"3px"}}>{unitId}</span></div>
+          <div className="div1">
+            Building
+            <span
+              style={{
+                color: "royalblue",
+                fontWeight: "bold",
+                marginLeft: "3px",
+              }}
+            >
+              {building}
+            </span>
+          </div>
+          <div className="div2">
+            Floor{" "}
+            <span
+              style={{
+                color: "#a09df5",
+                fontWeight: "bold",
+                marginLeft: "3px",
+              }}
+            >
+              {Floor}
+            </span>
+          </div>
+          <div className="div1">
+            Unit Id
+            <span
+              style={{
+                color: "royalblue",
+                fontWeight: "bold",
+                marginLeft: "3px",
+              }}
+            >
+              {unitId}
+            </span>
+          </div>
         </div>
         {/* image upload starting  */}
         <div className="Assets_image">
-          <img src={AssetImage} alt="Asset Image"></img>
-          <img src={AssetImage} alt="Asset Image"></img>
-          <img src={AssetImage} alt="Asset Image"></img>
           <img src={AssetImage} alt="Asset Image"></img>
         </div>
         {/* Image upload Tab */}
@@ -155,6 +198,17 @@ const Asset = () => {
           />
         </div>
         <div className="Textarea">
+          <select
+            className="AssetSelect"
+            style={{ textTransform: "uppercase" }}
+            onChange={(e) => setstatus(e.target.value)}
+          >
+            <option>
+              <h3>Select Status</h3>
+            </option>
+            <option value={"in progress"}>In Progress</option>
+            <option value={"completed"}>completed</option>
+          </select>
           <label>Add Remark</label>
           <textarea
             type="text"
@@ -168,7 +222,11 @@ const Asset = () => {
         <button type="submit" className="Submit">
           Send
         </button>
-        <button type="submit" className="Submit" onClick={e=>setnotify("yes")}>
+        <button
+          type="submit"
+          className="Submit"
+          onClick={(e) => setnotify("yes")}
+        >
           Send with Notification
         </button>
       </form>

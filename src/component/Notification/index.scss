@@ -1,0 +1,57 @@
+.Notification {
+    width: 100%;
+    min-height: 100%;
+
+    .NoticationWrapper {
+        margin: 10px;
+        width: 80%;
+        margin-inline: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        overflow-y: scroll;
+        align-items: center;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+    }
+}
+
+.notifiactionCard {
+    max-width: 300px;
+    background-color: #fff;
+    box-shadow: 6px 6px 5px 0px rgba(100, 99, 99, 0.219);
+    border: 1px solid rgba(128, 128, 128, 0.336);
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+
+    @media (max-width:768px) {
+        width: auto;
+
+
+    }
+
+    details {
+        font-size: 15px;
+
+        p {
+            color: rgb(102, 151, 3);
+            font-weight: bold;
+        }
+    }
+
+    span {
+        color: blueviolet;
+        margin-left: 10px;
+    }
+
+    h6 {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+    }
+
+}

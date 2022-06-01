@@ -26,11 +26,11 @@ const Sidebar = () => {
           </li>
 
           <li>
-            <NavLink to="/notification">Notification</NavLink>
+            <NavLink to="notifications">Notification</NavLink>
           </li>
 
           <li>
-            <NavLink to="/logout">Logout</NavLink>
+            <NavLink to="/">Logout</NavLink>
           </li>
         </ul>
       </div>
@@ -45,11 +45,11 @@ const Sidebar = () => {
           </li>
 
           <li>
-            <NavLink to="/notification">Notification</NavLink>
+            <NavLink to="notifications">Notification</NavLink>
           </li>
 
           <li>
-            <NavLink to="/logout">Logout</NavLink>
+            <NavLink to="/">Logout</NavLink>
           </li>
         </ul>
       </div>
