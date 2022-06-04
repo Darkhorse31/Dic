@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import AssetImage from "../../assets/room.png";
 import { useSelector, useDispatch } from "react-redux";
 import "./index.scss";
-import { B1Floor, B2Floor } from "../Floor";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { allassets } from "../../redux/slice/AssetSice";
@@ -13,7 +11,6 @@ const Asset = () => {
   const { id } = useParams();
   const userid = useSelector((state) => state.customerinfo.value);
   const assetData = useSelector((state) => state.assetSlice.value);
-  const [showImage, setshowImage] = useState([]);
   const [file, setfile] = useState([null]);
   const [status, setstatus] = useState("");
   const [notify, setnotify] = useState("no");
@@ -22,6 +19,7 @@ const Asset = () => {
   const [building, setbuilding] = useState("");
   const [Floor, setFloor] = useState("");
   const [customerImage, setCustomerImage] = useState([]);
+  const [showunitNumber, setShowFloor] = useState("");
   useEffect(() => {
     const AllData = async () => {
       await axios
@@ -30,7 +28,6 @@ const Asset = () => {
         )
         .then((res) => {
           const { data } = res;
-          console.log(data);
           dispatch(allassets(data));
         })
         .catch((err) => {
@@ -67,6 +64,7 @@ const Asset = () => {
     assetData.forEach((Data) => {
       if (Data.unit_number === unitId) {
         setunitId(Data.unit_id);
+        setShowFloor(Data.unit_number);
       }
     });
   }, [unitId]);
@@ -174,7 +172,7 @@ const Asset = () => {
             </span>
           </div>
           <div className="div1">
-            Unit Id
+            Unit Number
             <span
               style={{
                 color: "royalblue",
@@ -182,7 +180,7 @@ const Asset = () => {
                 marginLeft: "3px",
               }}
             >
-              {unitId}
+              {showunitNumber}
             </span>
           </div>
         </div>

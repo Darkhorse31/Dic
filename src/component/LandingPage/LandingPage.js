@@ -6,10 +6,8 @@ import { useSelector } from "react-redux";
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import axios from "axios";
-import { BlenderOutlined } from "@mui/icons-material";
 const LandingPage = () => {
   const customer = useSelector((state) => state.customerinfo.value);
-  console.log(customer.user_id);
    const [Notification, setNotification] = useState([])
   useEffect(() => {
     const Notification = async () => {
@@ -28,7 +26,6 @@ const LandingPage = () => {
     };
     Notification();
   }, []);
-  console.log(Notification);
   return (
     <div className="LandingPage">
       <div className="Landingpage_wrapper">

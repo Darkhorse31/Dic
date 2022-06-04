@@ -3,12 +3,11 @@ import "./index.scss";
 import Customer_image from "../../assets/detail-pic.png";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Items from "../Asset";
 const CustomerDetail = () => {
-  // All respose Data state
   const [Order_id,setorderId]=useState("");
   const [Data, setData] = useState([]);
   const [Ntems, setitems] = useState([]);
@@ -32,8 +31,8 @@ const CustomerDetail = () => {
         });
     };
     DetailComponent();
-  }, []);
- console.log()
+  },[]);
+
   const Navigate = useNavigate();
   return (
     <div className="CustomerDetail">
