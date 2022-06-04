@@ -187,7 +187,7 @@ const Asset = () => {
         {/* image upload starting  */}
         <div className="Assets_image">
           {customerImage.map((img) => {
-            return <img src={img} alt="Asset Image" />;
+            return <img src={img} alt="Asset " />;
           })}
         </div>
         {/* Image upload Tab */}
