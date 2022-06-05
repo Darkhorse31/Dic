@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import "./index.scss";
 import axios from "axios";
@@ -20,6 +19,7 @@ const Asset = () => {
   const [building, setbuilding] = useState("");
   const [Floor, setFloor] = useState("");
   const [customerImage, setCustomerImage] = useState([]);
+  const [showunitNumber, setShowFloor] = useState("");
   useEffect(() => {
     const AllData = async () => {
       await axios
@@ -28,7 +28,6 @@ const Asset = () => {
         )
         .then((res) => {
           const { data } = res;
-          console.log(data);
           dispatch(allassets(data));
         })
         .catch((err) => {
@@ -65,6 +64,7 @@ const Asset = () => {
     assetData.forEach((Data) => {
       if (Data.unit_number === unitId) {
         setunitId(Data.unit_id);
+        setShowFloor(Data.unit_number);
       }
     });
   }, [unitId]);
@@ -172,7 +172,7 @@ const Asset = () => {
             </span>
           </div>
           <div className="div1">
-            Unit Id
+            Unit Number
             <span
               style={{
                 color: "royalblue",
@@ -180,14 +180,14 @@ const Asset = () => {
                 marginLeft: "3px",
               }}
             >
-              {unitId}
+              {showunitNumber}
             </span>
           </div>
         </div>
         {/* image upload starting  */}
         <div className="Assets_image">
           {customerImage.map((img) => {
-            return <img src={img} alt="Asset Image" />;
+            return <img src={img} alt="Asset " />;
           })}
         </div>
         {/* Image upload Tab */}
