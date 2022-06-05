@@ -10,6 +10,8 @@ import Asset from "./component/AssetUpload";
 import UpdatePassword from "./component/UpdatePassword";
 import Success from "./component/PasswordUpdationSuccessful";
 import Notification from "./component/Notification/Notification";
+import React from "react";
+const LazyNotification=React.lazy(()=>import('./component/Notification/Notification'))
 function App() {
   return (
     <div className="App">
@@ -21,7 +23,7 @@ function App() {
         <Route path="/orderlist" element={<Home />}>
           <Route path="order-detail/:id" element={<CustomerDetail />} />
           <Route path="add-remarks/:id" element={<Asset />}></Route>
-          <Route path="notifications" element={<Notification />} />
+          <Route path="notifications" element={<React.Suspense fallback="Loading..."><LazyNotification /></React.Suspense>} />
           <Route index element={<ListWrapper />}></Route>
         </Route>
         <Route path="/notifications" element={<Notification />} />

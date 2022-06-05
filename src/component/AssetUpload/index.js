@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AssetImage from "../../assets/room.png";
+
 import { useSelector, useDispatch } from "react-redux";
 import "./index.scss";
-import { B1Floor, B2Floor } from "../Floor";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { allassets } from "../../redux/slice/AssetSice";
@@ -13,7 +12,6 @@ const Asset = () => {
   const { id } = useParams();
   const userid = useSelector((state) => state.customerinfo.value);
   const assetData = useSelector((state) => state.assetSlice.value);
-  const [showImage, setshowImage] = useState([]);
   const [file, setfile] = useState([null]);
   const [status, setstatus] = useState("");
   const [notify, setnotify] = useState("no");
